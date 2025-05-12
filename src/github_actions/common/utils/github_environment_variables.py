@@ -39,7 +39,7 @@ class GitHubContext:
     sha: str
 
     @staticmethod
-    def from_env() -> "GitHubContext":
+    def from_env(github_custom_ref="", github_custom_ref_name="") -> "GitHubContext":
         required_env_vars = [
             "GITHUB_ACTOR",
             "GITHUB_API_URL",
@@ -68,8 +68,8 @@ class GitHubContext:
             base_ref=os.getenv("GITHUB_BASE_REF"),
             event_name=os.getenv("GITHUB_EVENT_NAME"),
             head_ref=os.getenv("GITHUB_HEAD_REF"),
-            ref=os.getenv("GITHUB_REF"),
-            ref_name=os.getenv("GITHUB_REF_NAME"),
+            ref=github_custom_ref if github_custom_ref else os.getenv("GITHUB_REF"),
+            ref_name=github_custom_ref_name if github_custom_ref_name else os.getenv("GITHUB_REF_NAME"),
             ref_type=os.getenv("GITHUB_REF_TYPE"),
             repository=os.getenv("GITHUB_REPOSITORY"),
             repository_owner=os.getenv("GITHUB_REPOSITORY_OWNER"),
