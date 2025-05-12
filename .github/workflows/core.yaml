@@ -1,0 +1,36 @@
+name: GitHub Actions Common CI
+
+on:
+  push:
+    branches:
+      - master
+      - feature/*
+
+env:
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  VERSION: v1
+
+jobs:
+  ci:
+    name: Checkout main repository, release GitHub Actions Common
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Initialize environment variables
+        run: |
+          GIT_BRANCH="${GITHUB_REF#refs/heads/}"
+
+          if [[ "master" != "${GIT_BRANCH}" ]]; then
+            VERSION="${VERSION}-develop"
+          fi
+
+          echo "GIT_BRANCH=${GIT_BRANCH}" >> ${GITHUB_ENV}
+          echo "VERSION=${VERSION}" >> ${GITHUB_ENV}
+
+      - name: Checkout main repository
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref }}
+
+      - name: Release GitHub Actions Common
+        run: |
+          ./release-service.sh ${{ env.VERSION }} ${{ env.GIT_BRANCH }} ${{ env.GITHUB_SHA }} ""
