@@ -6,7 +6,10 @@ readme = "README.md"
 license = { text = "Apache-2.0" }
 requires-python = ">=3.10"
 authors = [{ name = "Edenlabllc" }]
-maintainers = [{ name = "SRE Team: @anovikov-el @apanasiuk-el" }]
+maintainers = [
+  { name = "@anovikov-el" },
+  { name = "@apanasiuk-el" }
+]
 keywords = [
   "python", "github", "actions",
   "ci", "cd", "devops", "infrastructure",
