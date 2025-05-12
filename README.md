@@ -29,15 +29,17 @@ It is not intended for standalone use, but rather as a dependency in  GitHub Act
 
 ## Directory structure
 
-Source code is located under [`src/github_actions/`](./src/github_actions/).
+Source code is located under [`src/github_actions/`](./src/github_actions).
 
-### GitHub package usage
+## GitHub package usage
 
 To install from `requirements.txt`, no authentication required:
 
 ```text
 git+https://github.com/edenlabllc/github_actions.common.git@v1#egg=github_actions.common
 ```
+
+See [`examples/`](./examples) for more requirements files.
 
 ## Used by
 
@@ -46,3 +48,9 @@ This package is used by the following Edenlab LLC's GitHub Actions:
 - [`gitlabflow.cd.action`](https://github.com/edenlabllc/gitlabflow.cd.action) — GitLabFlow-style CD with RMK and multi-cloud support  
 - [`tenant.artifact.ci.action`](https://github.com/edenlabllc/tenant.artifact.ci.action) — Artifact tagging and release propagation
 - other internal Edenlab LLC's repositories and private automation tools
+
+## Internals
+
+- [`pyproject.toml`](./pyproject.toml) — project metadata and dependency definitions  
+- [`src/github_actions/`](./src/github_actions) — core library source code  
+- [examples/](./examples) — example ready-to-use requirements files.
