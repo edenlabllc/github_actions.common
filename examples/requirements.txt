@@ -1,0 +1,15 @@
+# === Public GitHub package ===
+# Installs from the v1 tag of a public GitHub repository
+# No authentication required
+git+https://github.com/edenlabllc/github_actions.common.git@v1#egg=github_actions.common
+
+# === Private GitHub package ===
+# Installs from v1 tag of a private GitHub repository
+# Requires a GitHub Personal Access Token (with 'repo' scope)
+# The token should be passed securely via environment variables
+# Example usage:
+#   export GITHUB_TOKEN=ghp_XXXXXXXXXXXXXXXXXXXXXXXXXXXX
+#   pip install -r requirements.txt
+#
+# Do NOT hardcode your token here!
+git+https://${GITHUB_TOKEN}@github.com/edenlabllc/github_actions.common.git@v1#egg=github_actions.common
