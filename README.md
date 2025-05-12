@@ -53,4 +53,4 @@ This package is used by the following Edenlab LLC's GitHub Actions:
 
 - [`pyproject.toml`](./pyproject.toml) — project metadata and dependency definitions  
 - [`src/github_actions/`](./src/github_actions) — core library source code  
-- [examples/](./examples) — example ready-to-use requirements files.
+- [`examples/`](./examples) — example ready-to-use requirements files.
