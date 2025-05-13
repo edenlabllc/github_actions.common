@@ -131,6 +131,20 @@ class EBSVolumeFetcher(AWSSessionManager):
                 f"| {vol['Name']} | {vol['State']} | {vol['VolumeType']} | {vol['SizeGiB']}"
             )
 
+    def delete_orphaned_volumes(self):
+        volumes = self.list_orphaned_volumes()
+        if not volumes:
+            return
+
+        print(f"Found {len(volumes)} orphaned volumes. Deleting...")
+        for vol in volumes:
+            vol_id = vol["VolumeId"]
+            try:
+                self.ec2_client.delete_volume(VolumeId=vol_id)
+                print(f"Deleted volume {vol_id}")
+            except (ClientError, BotoCoreError) as err:
+                raise ValueError(f"failed to delete volume {vol_id}: {err}")
+
 
 class S3BucketManager(AWSSessionManager):
     def __init__(self, region_name: str):
