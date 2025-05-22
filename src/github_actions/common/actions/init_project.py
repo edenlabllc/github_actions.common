@@ -12,7 +12,7 @@ class RMKConfigInitCommand(BaseCommand, CMDInterface):
         super().__init__(environment)
         self.cluster_provider = args.rmk_cluster_provider
         self.github_token = args.github_token
-        self.slack_notification = getattr(args, "rmk_slack_notification", "")
+        self.slack_notifications = getattr(args, "rmk_slack_notifications", "")
         self.slack_channel = getattr(args, "rmk_slack_channel", "")
         self.slack_message_details = getattr(args, "rmk_slack_message_details", "")
         self.slack_webhook = getattr(args, "rmk_slack_webhook", "")
@@ -23,7 +23,7 @@ class RMKConfigInitCommand(BaseCommand, CMDInterface):
     def run(self):
         """Configure Slack notifications if enabled."""
         os.environ["RMK_GITHUB_TOKEN"] = self.github_token
-        if self.slack_notification == "true":
+        if self.slack_notifications == "true":
             os.environ["RMK_SLACK_WEBHOOK"] = self.slack_webhook
             os.environ["RMK_SLACK_CHANNEL"] = self.slack_channel
 
