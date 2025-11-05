@@ -13,7 +13,7 @@ maintainers = [
 keywords = [
   "python", "github", "actions",
   "ci", "cd", "devops", "infrastructure",
-  "aws", "azure", "gcp", "onprem", "devops",
+  "aws", "azure", "gcp", "onprem",
   "rmk",
 ]
 classifiers = [
