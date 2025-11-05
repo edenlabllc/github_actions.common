@@ -28,10 +28,18 @@ class GCPConfig:
 
 
 @dataclass
+class OnPremConfig:
+    ONPREM_SSH_INIT_SERVER_HOST: str
+    ONPREM_SSH_PRIVATE_KEY: str
+    ONPREM_SSH_USER: str
+
+
+@dataclass
 class ClusterProviders:
     aws: Optional[AWSConfig] = field(default=None)
     azure: Optional[AzureConfig] = field(default=None)
     gcp: Optional[GCPConfig] = field(default=None)
+    onprem: Optional[OnPremConfig] = field(default=None)
 
 
 @dataclass
@@ -63,6 +71,7 @@ class Credentials:
                         aws=AWSConfig(**cluster_providers["aws"]) if "aws" in cluster_providers else None,
                         azure=AzureConfig(**cluster_providers["azure"]) if "azure" in cluster_providers else None,
                         gcp=GCPConfig(**cluster_providers["gcp"]) if "gcp" in cluster_providers else None,
+                        onprem=OnPremConfig(**cluster_providers["onprem"]) if "onprem" in cluster_providers else None,
                     )
                 )
             except TypeError as err:
@@ -130,8 +139,14 @@ class Credentials:
                     "GOOGLE_APPLICATION_CREDENTIALS": credentials_path,
                     "GCP_REGION": providers.gcp.GCP_REGION,
                 })
+            case "onprem":
+                os.environ.update({
+                    "RMK_ONPREM_SSH_INIT_SERVER_HOST": providers.onprem.ONPREM_SSH_INIT_SERVER_HOST,
+                    "RMK_ONPREM_SSH_PRIVATE_KEY": providers.onprem.ONPREM_SSH_PRIVATE_KEY,
+                    "RMK_ONPREM_SSH_USER": providers.onprem.ONPREM_SSH_USER,
+                })
             case _:
-                raise ValueError(f"invalid provider '{provider}', supported providers: aws, azure, gcp")
+                raise ValueError(f"invalid provider '{provider}', supported providers: aws, azure, gcp, onprem")
 
         print(f"Credentials as environment variables set for {env_name} with cluster provider: {provider}.")
 
