@@ -15,9 +15,9 @@ class RMKInstaller:
     def verify_rmk_version(self):
         print("Verifying RMK installation version...")
         if self.version != "latest":
-            if version.parse('v0.45.2') > version.parse(self.version):
+            if version.parse('v0.48.0') > version.parse(self.version):
                 raise Exception(f"version {self.version} of RMK is not correct, " +
-                                "the version for RMK must be at least v0.45.2 or greater")
+                                "the version for RMK must be at least v0.48.0 or greater")
 
     def install_rmk(self):
         print("Installing RMK.")

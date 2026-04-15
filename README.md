@@ -36,7 +36,7 @@ Source code is located under [`src/github_actions/`](./src/github_actions).
 To install from `requirements.txt`, no authentication required:
 
 ```text
-git+https://github.com/edenlabllc/github_actions.common.git@v1#egg=github_actions.common
+git+https://github.com/edenlabllc/github_actions.common.git@v2#egg=github_actions.common
 ```
 
 See [`examples/`](./examples) for more requirements files.
