@@ -36,6 +36,8 @@ class BaseCommand(ABC):
 
     def notify_slack(self, github_context: GitHubContext, args: Namespace, status, message,
                      additional_info=None, tenant=None, slack_message_log_output: bool = True):
+        if args.rmk_slack_notifications != "true":
+            return
         notifier = SlackNotifier(github_context, args, status=status, message=message,
                                  additional_info=additional_info, tenant=tenant)
         response_code = notifier.notify()
