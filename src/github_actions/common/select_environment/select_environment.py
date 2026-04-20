@@ -14,7 +14,7 @@ class EnvironmentSelectorInterface(ABC):
 
 class EnvironmentSelector(EnvironmentSelectorInterface):
     TASK_NUM_REGEXP = r"[a-z]+-\d+"
-    SEMVER_REGEXP = r"v\d+\.\d+\.\d+(-rc)?$"
+    SEMVER_REGEXP = r"v\d+\.\d+\.\d+(-rc(\.\d+)?)?$"
 
     PREFIX_FEATURE_BRANCH = "feature"
     PREFIX_RELEASE_BRANCH = "release"
