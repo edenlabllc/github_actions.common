@@ -47,9 +47,21 @@ class GETTenant(BaseCommand, CMDInterface):
         return self.run()
 
     def run(self) -> str:
-        output = self.run_command(f"rmk --log-format=json config view", True)
+        output = self.run_command("rmk --log-format=json config view", True)
         rmk_config = json.loads(output)
         return rmk_config["config"]["Tenant"]
+
+class GetKodjinRootDomain(BaseCommand, CMDInterface):
+    def __init__(self, environment: str):
+        super().__init__(environment)
+
+    def execute(self) -> str:
+        return self.run()
+
+    def run(self) -> str:
+        output = self.run_command("rmk --log-format=json config view", True)
+        rmk_config = json.loads(output)
+        return rmk_config["config"]["RootDomain"]
 
 
 class ProjectInitializer:
