@@ -15,28 +15,30 @@ class GitHubRepoManager:
 
         try:
             if self.github_token and len(self.github_token) > 0:
-                # Створюємо тимчасовий askpass скрипт
+                # create askpass script to provide token to Git when it prompts for credentials
                 askpass_path = os.path.abspath("askpass.sh")
                 with open(askpass_path, "w") as f:
-                    # Якщо Git просить Username — повертаємо будь-який текст (напр. 'git')
-                    # Якщо просить Password — повертаємо сам токен
+                    # If Git prompts for Username — we return "git" (or any non-empty string)
+                    # If Git prompts for Password — we return the actual token
                     f.write(f'''#!/bin/sh
-                case "$1" in
-                    *Username*) echo "git" ;;
-                    *Password*) echo "{self.github_token}" ;;
-                esac
-                ''')
+                    case "$1" in
+                        *Username*) echo "git" ;;
+                        *Password*) echo "{self.github_token}" ;;
+                    esac
+                    ''')
 
-                # Робимо скрипт виконуваним
+                # Make the script executable
                 os.chmod(askpass_path, 0o700)
 
-                # Задаємо змінну оточення для Git
+                # Set the environment variable for Git
                 os.environ["GIT_ASKPASS"] = askpass_path
 
             repo = Repo.clone_from(self.repo_url, self.local_dir)
 
             if self.branch:
                 repo.heads[self.branch].checkout()
+                print(f"Checked out branch: {self.branch}")
+
             print(f"Repository {self.repo_url} cloned successfully!")
         except Exception as e:
             print(f"Error cloning repository: {e}")
