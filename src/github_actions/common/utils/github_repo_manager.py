@@ -15,10 +15,23 @@ class GitHubRepoManager:
 
         try:
             if self.github_token and len(self.github_token) > 0:
-                os.environ["GITHUB_TOKEN"] = self.github_token
-                os.environ["GIT_ASKPASS"] = "echo"
-                os.environ["GIT_PASSWORD"] = os.environ["GITHUB_TOKEN"]
-                print(f"Using GitHub token: {'****' + self.github_token[-4:]}")
+                # Створюємо тимчасовий askpass скрипт
+                askpass_path = os.path.abspath("askpass.sh")
+                with open(askpass_path, "w") as f:
+                    # Якщо Git просить Username — повертаємо будь-який текст (напр. 'git')
+                    # Якщо просить Password — повертаємо сам токен
+                    f.write(f'''#!/bin/sh
+                case "$1" in
+                    *Username*) echo "git" ;;
+                    *Password*) echo "{self.github_token}" ;;
+                esac
+                ''')
+
+                # Робимо скрипт виконуваним
+                os.chmod(askpass_path, 0o700)
+
+                # Задаємо змінну оточення для Git
+                os.environ["GIT_ASKPASS"] = askpass_path
 
             repo = Repo.clone_from(self.repo_url, self.local_dir)
 
