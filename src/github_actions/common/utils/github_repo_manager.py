@@ -13,14 +13,18 @@ class GitHubRepoManager:
     def clone_or_update_repo(self):
         print("Cloning repository...")
 
-        if self.github_token and len(self.github_token) > 0:
-            os.environ["GITHUB_TOKEN"] = self.github_token
-            os.environ["GIT_ASKPASS"] = "echo"
-            os.environ["GIT_PASSWORD"] = os.environ["GITHUB_TOKEN"]
-            print(f"Using GitHub token: {'****' + self.github_token[-4:]}")
+        try:
+            if self.github_token and len(self.github_token) > 0:
+                os.environ["GITHUB_TOKEN"] = self.github_token
+                os.environ["GIT_ASKPASS"] = "echo"
+                os.environ["GIT_PASSWORD"] = os.environ["GITHUB_TOKEN"]
+                print(f"Using GitHub token: {'****' + self.github_token[-4:]}")
 
-        repo = Repo.clone_from(self.repo_url, self.local_dir)
+            repo = Repo.clone_from(self.repo_url, self.local_dir)
 
-        if self.branch:
-            repo.heads[self.branch].checkout()
-        print(f"Repository {self.repo_url} cloned successfully!")
+            if self.branch:
+                repo.heads[self.branch].checkout()
+            print(f"Repository {self.repo_url} cloned successfully!")
+        except Exception as e:
+            print(f"Error cloning repository: {e}")
+            raise
