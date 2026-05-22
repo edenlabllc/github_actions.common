@@ -1,3 +1,5 @@
+import os
+
 from git import Repo
 
 
@@ -11,12 +13,13 @@ class GitHubRepoManager:
     def clone_or_update_repo(self):
         print("Cloning repository...")
 
-        env = None
         if self.github_token and len(self.github_token) > 0:
-            env = {"GITHUB_TOKEN": self.github_token, "GIT_ASKPASS": "echo", "GIT_PASSWORD": self.github_token}
+            os.environ["GITHUB_TOKEN"] = self.github_token
+            os.environ["GIT_ASKPASS"] = "echo"
+            os.environ["GIT_PASSWORD"] = os.environ["GITHUB_TOKEN"]
             print(f"Using GitHub token: {'****' + self.github_token[-4:]}")
 
-        repo = Repo.clone_from(self.repo_url, self.local_dir, env=env)
+        repo = Repo.clone_from(self.repo_url, self.local_dir)
 
         if self.branch:
             repo.heads[self.branch].checkout()
