@@ -45,9 +45,6 @@ class GitHubRepoManager:
                 repo.heads[self.branch].checkout()
                 print(f"Checked out branch: {self.branch}")
 
-            # print ls
-            print(f"Contents of {self.local_dir}: {os.listdir(self.local_dir)}")
-
             print(f"Repository {self.repo_url} cloned successfully!")
         except Exception as e:
             print(f"Error cloning repository: {e}")
