@@ -4,7 +4,13 @@ from git import Repo
 
 
 class GitHubRepoManager:
-    def __init__(self, local_dir: str, repo_url: str, branch: str | None = None, github_token: str | None = None):
+    def __init__(
+        self,
+        local_dir: str,
+        repo_url: str,
+        branch: str | None = None,
+        github_token: str | None = None,
+    ):
         self.local_dir = local_dir
         self.repo_url = repo_url
         self.branch = branch
@@ -38,6 +44,9 @@ class GitHubRepoManager:
             if self.branch:
                 repo.heads[self.branch].checkout()
                 print(f"Checked out branch: {self.branch}")
+
+            # print ls
+            print(f"Contents of {self.local_dir}: {os.listdir(self.local_dir)}")
 
             print(f"Repository {self.repo_url} cloned successfully!")
         except Exception as e:
