@@ -13,9 +13,11 @@ class GitHubRepoManager:
 
         env = None
         if self.github_token and len(self.github_token) > 0:
-            env = {"GITHUB_TOKEN": self.github_token}
+            env = {"GITHUB_TOKEN": self.github_token, "GIT_ASKPASS": "echo", "GIT_PASSWORD": self.github_token}
+            print(f"Using GitHub token: {'****' + self.github_token[-4:]}")
 
         repo = Repo.clone_from(self.repo_url, self.local_dir, env=env)
+
         if self.branch:
             repo.heads[self.branch].checkout()
         print(f"Repository {self.repo_url} cloned successfully!")
