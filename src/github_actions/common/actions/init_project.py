@@ -51,7 +51,7 @@ class GETTenant(BaseCommand, CMDInterface):
         rmk_config = json.loads(output)
         return rmk_config["config"]["Tenant"]
 
-class GetKodjinRootDomain(BaseCommand, CMDInterface):
+class GetRootDomain(BaseCommand, CMDInterface):
     def __init__(self, environment: str):
         super().__init__(environment)
 

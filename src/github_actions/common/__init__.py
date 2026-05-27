@@ -1,6 +1,6 @@
 # github_actions/common/__init__.py
 
-from .actions.init_project import GETTenant, ProjectInitializer, RMKConfigInitCommand, GetKodjinRootDomain
+from .actions.init_project import GETTenant, ProjectInitializer, RMKConfigInitCommand, GetRootDomain
 from .credentials.cluster_provider_credentials import (
     AWSConfig, AzureConfig, ClusterProviders, Credentials, EnvironmentConfig, GCPConfig
 )
@@ -18,7 +18,6 @@ from .utils.cmd import BaseCommand, CMDInterface
 from .utils.github_environment_variables import GitHubContext
 from .utils.install_rmk import RMKInstaller
 from .utils.install_kodjin_cli import KodjinCLIInstaller
-from .utils.github_repo_manager import GitHubRepoManager
 
 
 __all__ = [
@@ -48,6 +47,5 @@ __all__ = [
     "S3BucketManager",
     "SlackNotifier",
     "KodjinCLIInstaller",
-    "GitHubRepoManager",
-    "GetKodjinRootDomain",
+    "GetRootDomain",
 ]
