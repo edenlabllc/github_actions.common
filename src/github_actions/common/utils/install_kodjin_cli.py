@@ -14,7 +14,7 @@ class KodjinCLIInstaller:
 
     def verify_kodjin_cli_version(self):
         print("Verifying Kodjin CLI installation version...")
-        if self.version != "latest":
+        if self.version != "latest" and self.version != "nightly":
             if version.parse(self.version) <= version.parse("v0.1.11"):
                 raise Exception(
                     f"version {self.version} of Kodjin CLI is not correct, "
