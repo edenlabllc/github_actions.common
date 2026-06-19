@@ -1,0 +1,49 @@
+import requests
+
+
+class KeycloakClientInfoFetcher:
+    def __init__(
+        self,
+        keycloak_url: str,
+        username: str,
+        client_id: str,
+        password: str,
+        clients_realm: str,
+        token_realm: str = "master",
+    ):
+        self.base_url = keycloak_url.rstrip("/")
+        self.username = username
+        self.client_id = client_id
+        self.password = password
+        self.token_realm = token_realm
+        self.clients_realm = clients_realm
+
+    def get_client_info(self) -> list[dict]:
+        access_token = self._get_access_token()
+        clients_response = requests.get(
+            f"{self.base_url}/admin/realms/{self.clients_realm}/clients",
+            headers={"Authorization": f"Bearer {access_token}"},
+            params={"clientId": self.client_id},
+            timeout=30,
+        )
+        clients_response.raise_for_status()
+        return clients_response.json()
+
+    def _get_access_token(self) -> str:
+        token_response = requests.post(
+            f"{self.base_url}/realms/{self.token_realm}/protocol/openid-connect/token",
+            headers={"content-type": "application/x-www-form-urlencoded"},
+            data={
+                "client_id": self.client_id,
+                "username": self.username,
+                "grant_type": "password",
+                "password": self.password,
+            },
+            timeout=30,
+        )
+        token_response.raise_for_status()
+
+        access_token = token_response.json().get("access_token")
+        if not access_token:
+            raise ValueError("access_token was not returned by Keycloak token endpoint")
+        return access_token
