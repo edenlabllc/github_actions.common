@@ -1,6 +1,3 @@
-import subprocess
-
-
 from ..utils.cmd import BaseCommand, CMDInterface
 
 
@@ -8,6 +5,12 @@ class Kubectl(BaseCommand, CMDInterface):
     def __init__(self, kubectl_download_url="https://dl.k8s.io/release/v1.36.2/bin/linux/amd64/kubectl"):
         self.kubectl_download_url = kubectl_download_url
         self._install_kubectl()
+
+    def execute(self):
+        self.run()
+
+    def run(self):
+        print("Kubectl is ready to use.")
 
     def get_secret(self, secret_name: str, namespace: str, secret_path: str) -> str:
         try:
@@ -26,7 +29,7 @@ class Kubectl(BaseCommand, CMDInterface):
                 capture_output=True,
             )
             return result.stdout
-        except subprocess.CalledProcessError as err:
+        except Exception as err:
             raise Exception(f"getting secret {secret_name} in namespace {namespace}:\n{err}")
 
     def _install_kubectl(self):
@@ -36,5 +39,5 @@ class Kubectl(BaseCommand, CMDInterface):
 
             version = self.run_command("kubectl version --client", check=True, text=True, capture_output=True)
             print(f"kubectl installed successfully. Version: {version.stdout.strip()}")
-        except subprocess.CalledProcessError as err:
+        except Exception as err:
             raise Exception(f"installing kubectl:\n{err}")
