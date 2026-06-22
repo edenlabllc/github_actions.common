@@ -8,13 +8,15 @@ class Kubectl:
 
     def get_secret(self, secret_name: str, namespace: str, secret_path: str) -> str:
         try:
+            print(f"Getting secret {secret_name} in namespace {namespace}.")
             result = subprocess.run(
                 ["kubectl", "get", "secret", secret_name, "-n", namespace, "-o", "yaml"], check=True, text=True, capture_output=True
             )
 
+            print(f"Secret {secret_name} retrieved successfully. Extracting data.")
             # parse yaml output and extract the password field, decode it from base64
             result = subprocess.run(
-                ["yq", f".data.{secret_path} | @base64d"],
+                ["yq", f"'.data.{secret_path} | @base64d'"],
                 input=result.stdout,
                 check=True,
                 text=True,
