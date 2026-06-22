@@ -3,8 +3,15 @@ from github_actions.common.utils.cmd import BaseCommand, CMDInterface
 
 class Kubectl(BaseCommand, CMDInterface):
     def __init__(self, kubectl_download_url="https://dl.k8s.io/release/v1.36.2/bin/linux/amd64/kubectl"):
+        super().__init__(None)
         self.kubectl_download_url = kubectl_download_url
+        self.run()
+
+    def run(self):
         self._install_kubectl()
+
+    def execute(self):
+        return self.run()
 
     def get_secret(self, secret_name: str, namespace: str, secret_path: str) -> str | None:
         try:
