@@ -18,6 +18,7 @@ from .utils.cmd import BaseCommand, CMDInterface
 from .utils.github_environment_variables import GitHubContext
 from .utils.install_rmk import RMKInstaller
 from .utils.install_kodjin_cli import KodjinCLIInstaller
+from .utils.kubectl import Kubectl
 from .utils.keycloak import KeycloakClientInfoFetcher
 
 
@@ -49,5 +50,6 @@ __all__ = [
     "S3BucketManager",
     "SlackNotifier",
     "KodjinCLIInstaller",
+    "Kubectl",
     "GetRootDomain",
 ]
