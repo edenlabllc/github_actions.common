@@ -43,10 +43,12 @@ class KeycloakClientInfoFetcher:
         )
         token_response.raise_for_status()
 
-        access_token = token_response.json().get("access_token")
+        response_json = token_response.json()
 
         # TODO: remove logging before merge!
-        print(f"Retrieved access token from Keycloak token endpoint. access_token: {access_token}")
+        print(f"Retrieved: {response_json}")
+
+        access_token = response_json.get("access_token")
         if not access_token:
             raise ValueError("access_token was not returned by Keycloak token endpoint")
         return access_token
