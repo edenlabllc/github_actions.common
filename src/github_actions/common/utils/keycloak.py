@@ -49,6 +49,9 @@ class KeycloakClientInfoFetcher:
         print(f"Retrieved: {response_json}")
 
         access_token = response_json.get("access_token")
+
+        # TODO: remove logging before merge!
+        print(f"Access token: {access_token[:10]}...")  # Print only the first 10 characters for security
         if not access_token:
             raise ValueError("access_token was not returned by Keycloak token endpoint")
         return access_token
