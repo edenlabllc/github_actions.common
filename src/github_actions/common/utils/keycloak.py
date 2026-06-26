@@ -1,3 +1,4 @@
+from urllib.parse import urlencode
 import requests
 
 
@@ -30,15 +31,20 @@ class KeycloakClientInfoFetcher:
         return clients_response.json()
 
     def _get_access_token(self) -> str:
-        token_response = requests.post(
-            f"{self.base_url}/realms/{self.token_realm}/protocol/openid-connect/token",
-            headers={"content-type": "application/x-www-form-urlencoded"},
-            data={
+
+        data = urlencode(
+            {
                 "client_id": self.client_id,
                 "username": self.username,
                 "grant_type": "password",
                 "password": self.password,
-            },
+            }
+        )
+
+        token_response = requests.post(
+            f"{self.base_url}/realms/{self.token_realm}/protocol/openid-connect/token",
+            headers={"content-type": "application/x-www-form-urlencoded"},
+            data=data,
             timeout=30,
         )
         token_response.raise_for_status()
