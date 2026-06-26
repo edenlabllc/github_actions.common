@@ -1,6 +1,6 @@
 # github_actions/common/__init__.py
 
-from .actions.init_project import GETTenant, ProjectInitializer, RMKConfigInitCommand, GetRootDomain
+from .actions.init_project import GETTenant, ProjectInitializer, RMKConfigInitCommand, GetRootDomain, RMKClusterSwitchCommand
 from .credentials.cluster_provider_credentials import (
     AWSConfig, AzureConfig, ClusterProviders, Credentials, EnvironmentConfig, GCPConfig
 )
@@ -46,6 +46,7 @@ __all__ = [
     "KeycloakClientInfoFetcher",
     "ProjectInitializer",
     "RMKConfigInitCommand",
+    "RMKClusterSwitchCommand",
     "RMKInstaller",
     "S3BucketManager",
     "SlackNotifier",

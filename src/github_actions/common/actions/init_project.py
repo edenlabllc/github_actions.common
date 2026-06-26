@@ -39,6 +39,20 @@ class RMKConfigInitCommand(BaseCommand, CMDInterface):
             self.run_command(f"rmk config init --cluster-provider={self.cluster_provider} --progress-bar=false")
 
 
+class RMKClusterSwitchCommand(BaseCommand, CMDInterface):
+    def __init__(self, force: bool = False):
+        super().__init__(environment="")
+        self.force = force
+
+    def execute(self):
+        self.run()
+
+    def run(self):
+        """Switch RMK cluster context."""
+        force_flag = "--force" if self.force else ""
+        self.run_command(f"rmk cluster switch {force_flag}")
+
+
 class GETTenant(BaseCommand, CMDInterface):
     def __init__(self, environment: str):
         super().__init__(environment)
