@@ -21,7 +21,7 @@ class Kubectl(BaseCommand, CMDInterface):
 
             print(f"contexts list: {self.run_command('kubectl config get-contexts', capture_output=True)}")
 
-            command = f"kubectl get secret {secret_name} --namespace {namespace} {context_flag} --output yaml | yq '.data.password'"
+            command = f"kubectl get secret {secret_name} --namespace {namespace} {context_flag} --output yaml | yq '.data.password  | @base64d'"
             print(f"Executing command: {command}")
             return self.run_command(command, capture_output=True)
 
