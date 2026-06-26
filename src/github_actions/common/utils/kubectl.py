@@ -2,9 +2,10 @@ from github_actions.common.utils.cmd import BaseCommand, CMDInterface
 
 
 class Kubectl(BaseCommand, CMDInterface):
-    def __init__(self, kubectl_download_url="https://dl.k8s.io/release/v1.36.2/bin/linux/amd64/kubectl"):
+    def __init__(self, context=None, kubectl_download_url="https://dl.k8s.io/release/v1.36.2/bin/linux/amd64/kubectl"):
         super().__init__(None)
         self.kubectl_download_url = kubectl_download_url
+        self.context = context
         self.run()
 
     def run(self):
@@ -16,8 +17,9 @@ class Kubectl(BaseCommand, CMDInterface):
     def get_secret(self, secret_name: str, namespace: str, secret_path: str) -> str | None:
         try:
             print(f"Getting secret {secret_name} in namespace {namespace}.")
+            context_flag = f"--context {self.context}" if self.context else ""
             return self.run_command(
-                f"kubectl get secret {secret_name} --namespace {namespace} --output yaml | yq '.data.password'", capture_output=True
+                f"kubectl get secret {secret_name} --namespace {namespace} {context_flag} --output yaml | yq '.data.password'", capture_output=True
             )
 
         except Exception as err:
