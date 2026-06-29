@@ -60,4 +60,7 @@ class KeycloakClientInfoFetcher:
         print(f"Access token: {access_token[:10]}...")  # Print only the first 10 characters for security
         if not access_token:
             raise ValueError("access_token was not returned by Keycloak token endpoint")
+        if access_token == "***":
+            raise ValueError("access_token is masked and not valid")
+
         return access_token
