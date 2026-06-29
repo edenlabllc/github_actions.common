@@ -21,8 +21,11 @@ class KeycloakClientInfoFetcher:
 
     def get_client_info(self) -> list[dict]:
         access_token = self._get_access_token()
+        url = f"{self.base_url}/admin/realms/{self.clients_realm}/clients"
+        print(f"Fetching client info from: {url} with access token: {access_token[:10]}...")  # Print only the first 10 characters for security
+
         clients_response = requests.get(
-            f"{self.base_url}/admin/realms/{self.clients_realm}/clients",
+            url,
             headers={"Authorization": f"Bearer {access_token}"},
             params={"clientId": self.client_id},
             timeout=30,
@@ -56,8 +59,6 @@ class KeycloakClientInfoFetcher:
 
         access_token = response_json.get("access_token")
 
-        # TODO: remove logging before merge!
-        print(f"Access token: {access_token[:10]}...")  # Print only the first 10 characters for security
         if not access_token:
             raise ValueError("access_token was not returned by Keycloak token endpoint")
         if len(access_token) < 10:  # Assuming a valid token should be longer than 10 characters
