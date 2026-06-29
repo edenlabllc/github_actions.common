@@ -58,6 +58,7 @@ class KeycloakClientInfoFetcher:
         print(f"Retrieved: {response_json}")
 
         access_token = response_json.get("access_token")
+        print(f"Access token length: {len(access_token) if access_token else 'None'}")  # Print the length of the token for debugging
 
         if not access_token:
             raise ValueError("access_token was not returned by Keycloak token endpoint")
