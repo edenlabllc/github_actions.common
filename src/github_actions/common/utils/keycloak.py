@@ -22,7 +22,7 @@ class KeycloakClientInfoFetcher:
     def get_client_info(self) -> list[dict]:
         access_token = self._get_access_token()
         url = f"{self.base_url}/admin/realms/{self.clients_realm}/clients"
-        print(f"Fetching client info from: {url} with access token: {access_token[:10]}...")  # Print only the first 10 characters for security
+        print(f"Fetching client info from: {url} for client_id: {self.client_id}")  # Print only the first 10 characters for security
 
         clients_response = requests.get(
             url,
