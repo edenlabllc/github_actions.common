@@ -7,6 +7,7 @@ class KeycloakClientInfoFetcher:
         self,
         keycloak_url: str,
         username: str,
+        admin_client_id: str,
         client_id: str,
         password: str,
         clients_realm: str,
@@ -14,6 +15,7 @@ class KeycloakClientInfoFetcher:
     ):
         self.base_url = keycloak_url.rstrip("/")
         self.username = username
+        self.admin_client_id = admin_client_id
         self.client_id = client_id
         self.password = password
         self.token_realm = token_realm
@@ -34,10 +36,9 @@ class KeycloakClientInfoFetcher:
         return clients_response.json()
 
     def _get_access_token(self) -> str:
-
         data = urlencode(
             {
-                "client_id": self.client_id,
+                "client_id": self.admin_client_id,
                 "username": self.username,
                 "grant_type": "password",
                 "password": self.password,
