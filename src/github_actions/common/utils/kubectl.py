@@ -29,11 +29,24 @@ class Kubectl(BaseCommand, CMDInterface):
             raise Exception(f"getting secret {secret_name} in namespace {namespace}:\n{err}")
 
     def _install_kubectl(self):
-        print("Installing kubectl.")
+        print("Checking kubectl installation.")
         try:
+            if self._is_kubectl_installed():
+                version = self.run_command("kubectl version --client", capture_output=True)
+                print(f"kubectl already installed. Version: {version}")
+                return
+
+            print("Installing kubectl.")
             self.run_command(f"bash -s -- {self.kubectl_download_url}")
 
             version = self.run_command("kubectl version --client", capture_output=True)
             print(f"kubectl installed successfully. Version: {version}")
         except Exception as err:
             raise Exception(f"installing kubectl:\n{err}")
+
+    def _is_kubectl_installed(self) -> bool:
+        try:
+            self.run_command("command -v kubectl", capture_output=True)
+            return True
+        except ValueError:
+            return False
