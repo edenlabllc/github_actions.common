@@ -63,7 +63,5 @@ class KeycloakClientInfoFetcher:
 
         if not access_token:
             raise ValueError("access_token was not returned by Keycloak token endpoint")
-        if len(access_token) < 10:  # Assuming a valid token should be longer than 10 characters
-            raise ValueError("access_token is masked and not valid")
 
         return access_token
