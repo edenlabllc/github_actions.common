@@ -1,6 +1,6 @@
 # github_actions/common/__init__.py
 
-from .actions.init_project import GETTenant, ProjectInitializer, RMKConfigInitCommand, GetRootDomain
+from .actions.init_project import GETTenant, ProjectInitializer, RMKConfigInitCommand, GetRootDomain, RMKClusterSwitchCommand
 from .credentials.cluster_provider_credentials import (
     AWSConfig, AzureConfig, ClusterProviders, Credentials, EnvironmentConfig, GCPConfig
 )
@@ -18,6 +18,8 @@ from .utils.cmd import BaseCommand, CMDInterface
 from .utils.github_environment_variables import GitHubContext
 from .utils.install_rmk import RMKInstaller
 from .utils.install_kodjin_cli import KodjinCLIInstaller
+from .utils.kubectl import Kubectl
+from .utils.keycloak import KeycloakClientInfoFetcher
 
 
 __all__ = [
@@ -41,11 +43,14 @@ __all__ = [
     "GETTenant",
     "GitHubContext",
     "GitHubOutput",
+    "KeycloakClientInfoFetcher",
     "ProjectInitializer",
     "RMKConfigInitCommand",
+    "RMKClusterSwitchCommand",
     "RMKInstaller",
     "S3BucketManager",
     "SlackNotifier",
     "KodjinCLIInstaller",
+    "Kubectl",
     "GetRootDomain",
 ]
